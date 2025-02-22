@@ -5,7 +5,7 @@ extern crate intel_mkl_src;
 extern crate accelerate_src;
 
 use anyhow::{Error as E, Result};
-use clap::{arg, Parser};
+use clap::{Parser, arg};
 
 use candle_core::{DType, Device, Tensor};
 use candle_nn::VarBuilder;

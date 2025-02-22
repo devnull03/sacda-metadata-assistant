@@ -116,7 +116,6 @@ impl Default for Qwen2Config {
     }
 }
 
-
 fn cumsum_2d(mask: &Tensor, dim: u8, device: &Device) -> Result<Tensor> {
     let mask = mask.to_vec2::<u8>()?;
 
@@ -189,11 +188,7 @@ impl Qwen2Embeddings {
             None
         };
 
-        let layer_norm = layer_norm(
-            config.hidden_size,
-            config.rms_norm_eps,
-            vb.pp("LayerNorm"),
-        )?;
+        let layer_norm = layer_norm(config.hidden_size, config.rms_norm_eps, vb.pp("LayerNorm"))?;
 
         let dropout = Dropout::new(config.attention_dropout);
 
@@ -220,7 +215,8 @@ impl Qwen2Embeddings {
 
         if let Some(position_embeddings) = &self.position_embeddings {
             if let Some(position_ids) = position_ids {
-                embeddings = embeddings.broadcast_add(&position_embeddings.forward(position_ids)?)?;
+                embeddings =
+                    embeddings.broadcast_add(&position_embeddings.forward(position_ids)?)?;
             }
         }
 
