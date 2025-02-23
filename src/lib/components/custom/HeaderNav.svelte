@@ -1,12 +1,6 @@
 <script lang="ts">
-  import House from "lucide-svelte/icons/house";
-  import ChartLine from "lucide-svelte/icons/chart-line";
-  import Package from "lucide-svelte/icons/package";
-  import Package2 from "lucide-svelte/icons/package-2";
   import PanelLeft from "lucide-svelte/icons/panel-left";
   import Search from "lucide-svelte/icons/search";
-  import ShoppingCart from "lucide-svelte/icons/shopping-cart";
-  import UsersRound from "lucide-svelte/icons/users-round";
 
   import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
@@ -14,6 +8,22 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
   import ThemeSwitcher from "$lib/components/custom/ThemeSwitcher.svelte";
+  import { page } from "$app/state";
+  import { tabs } from "$lib/utils/nav.store";
+
+  let parsedRoute = $derived(
+    page.url.pathname
+      .split("/")
+      .map((e, i) => ({
+        name: e.charAt(0).toUpperCase() + e.slice(1),
+        href: page.url.pathname
+          .split("/")
+          .slice(0, i + 1)
+          .join("/"),
+      }))
+      .filter((e, i) => i === 0 || e.name !== "")
+  );
+  let flatenedTabs = $derived(Object.values(tabs));
 </script>
 
 <header
@@ -37,59 +47,42 @@
           href="##"
           class="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base"
         >
-          <Package2 class="h-5 w-5 transition-all group-hover:scale-110" />
-          <span class="sr-only">Acme Inc</span>
+          <img src="/favicon.png" alt="logo" class="h-5 w-5 transition-all group-hover:scale-110" />
+          <span class="sr-only">SACDA</span>
         </a>
-        <a
-          href="##"
-          class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-        >
-          <House class="h-5 w-5" />
-          Dashboard
-        </a>
-        <a
-          href="##"
-          class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-        >
-          <ShoppingCart class="h-5 w-5" />
-          Orders
-        </a>
-        <a href="##" class="text-foreground flex items-center gap-4 px-2.5">
-          <Package class="h-5 w-5" />
-          Products
-        </a>
-        <a
-          href="##"
-          class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-        >
-          <UsersRound class="h-5 w-5" />
-          Customers
-        </a>
-        <a
-          href="##"
-          class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-        >
-          <ChartLine class="h-5 w-5" />
-          Settings
-        </a>
+
+        {#each flatenedTabs as tab}
+          <a
+            href={tab.path}
+            class="{tab.path === page.url.pathname
+              ? 'text-foreground'
+              : 'text-muted-foreground hover:text-foreground'} flex items-center gap-4 px-2.5"
+          >
+            <tab.component class="h-5 w-5" />
+            {tab.title}
+          </a>
+        {/each}
       </nav>
     </Sheet.Content>
   </Sheet.Root>
+
   <Breadcrumb.Root class="hidden md:flex">
     <Breadcrumb.List>
-      <Breadcrumb.Item>
-        <Breadcrumb.Link href="##">Dashboard</Breadcrumb.Link>
-      </Breadcrumb.Item>
-      <Breadcrumb.Separator />
-      <Breadcrumb.Item>
-        <Breadcrumb.Link href="##">Products</Breadcrumb.Link>
-      </Breadcrumb.Item>
-      <Breadcrumb.Separator />
-      <Breadcrumb.Item>
-        <Breadcrumb.Page>All Products</Breadcrumb.Page>
-      </Breadcrumb.Item>
+      {#each parsedRoute as crumb, idx}
+        <Breadcrumb.Item>
+          {#if idx === parsedRoute.length - 1}
+            <Breadcrumb.Page>{crumb.name || "Home"}</Breadcrumb.Page>
+          {:else}
+            <Breadcrumb.Link href={crumb.href || "/"}
+              >{crumb.name || "Home"}</Breadcrumb.Link
+            >
+            <Breadcrumb.Separator />
+          {/if}
+        </Breadcrumb.Item>
+      {/each}
     </Breadcrumb.List>
   </Breadcrumb.Root>
+
   <div class="relative ml-auto flex-1 md:grow-0">
     <Search class="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
     <Input
@@ -109,13 +102,13 @@
         size="icon"
         class="overflow-hidden rounded-full"
       >
-        <img
+        <!-- <img
           src="/images/placeholder-user.jpg"
           width={36}
           height={36}
           alt="Avatar"
           class="overflow-hidden rounded-full"
-        />
+        /> -->
       </Button>
     </DropdownMenu.Trigger>
     <DropdownMenu.Content align="end">
