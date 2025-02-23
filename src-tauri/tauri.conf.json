@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "sacda-metadata-assistant",
+        "title": "SACDA metadata assistant",
         "width": 800,
         "height": 600
       }

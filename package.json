@@ -15,7 +15,9 @@
   "dependencies": {
     "@tauri-apps/api": "2.2.0",
     "@tauri-apps/plugin-opener": "2.2.5",
-    "@tauri-apps/plugin-shell": "~2.2.0"
+    "@tauri-apps/plugin-shell": "~2.2.0",
+    "lucide-svelte": "^0.475.0",
+    "svelte-radix": "^2.0.1"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "3.0.8",
@@ -26,6 +28,7 @@
     "@tailwindcss/typography": "0.5.16",
     "@tauri-apps/cli": "2.2.7",
     "autoprefixer": "10.4.20",
+    "bits-ui": "0.22.0",
     "clsx": "2.1.1",
     "postcss": "^8.5.3",
     "svelte": "5.20.2",
