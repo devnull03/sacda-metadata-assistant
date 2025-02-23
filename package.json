@@ -17,6 +17,7 @@
     "@tauri-apps/plugin-opener": "2.2.5",
     "@tauri-apps/plugin-shell": "~2.2.0",
     "lucide-svelte": "^0.475.0",
+    "mode-watcher": "^0.5.1",
     "svelte-radix": "^2.0.1"
   },
   "devDependencies": {
