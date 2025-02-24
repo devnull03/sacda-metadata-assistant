@@ -20,7 +20,7 @@
 </script>
 
 <div
-  class="bg-muted/50 relative flex h-[85vh] min-h-[50vh] flex-col rounded-xl p-4 {className}"
+  class="bg-muted/50 relative flex min-h-[50vh] flex-col rounded-xl p-4 {className}" 
 >
   <Badge
     variant="outline"
