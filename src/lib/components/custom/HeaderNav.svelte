@@ -30,17 +30,19 @@
   class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
 >
   <Sheet.Root>
-    <Sheet.Trigger asChild let:builder>
-      <Button
-        builders={[builder]}
-        size="icon"
-        variant="outline"
-        class="sm:hidden"
-      >
-        <PanelLeft class="h-5 w-5" />
-        <span class="sr-only">Toggle Menu</span>
-      </Button>
-    </Sheet.Trigger>
+    <Sheet.Trigger asChild >
+      {#snippet children({ builder })}
+            <Button
+          builders={[builder]}
+          size="icon"
+          variant="outline"
+          class="sm:hidden"
+        >
+          <PanelLeft class="h-5 w-5" />
+          <span class="sr-only">Toggle Menu</span>
+        </Button>
+                {/snippet}
+        </Sheet.Trigger>
     <Sheet.Content side="left" class="sm:max-w-xs">
       <nav class="grid gap-6 text-lg font-medium">
         <a
@@ -95,22 +97,24 @@
   <ThemeSwitcher />
 
   <DropdownMenu.Root>
-    <DropdownMenu.Trigger asChild let:builder>
-      <Button
-        builders={[builder]}
-        variant="outline"
-        size="icon"
-        class="overflow-hidden rounded-full"
-      >
-        <!-- <img
-          src="/images/placeholder-user.jpg"
-          width={36}
-          height={36}
-          alt="Avatar"
+    <DropdownMenu.Trigger asChild >
+      {#snippet children({ builder })}
+            <Button
+          builders={[builder]}
+          variant="outline"
+          size="icon"
           class="overflow-hidden rounded-full"
-        /> -->
-      </Button>
-    </DropdownMenu.Trigger>
+        >
+          <!-- <img
+            src="/images/placeholder-user.jpg"
+            width={36}
+            height={36}
+            alt="Avatar"
+            class="overflow-hidden rounded-full"
+          /> -->
+        </Button>
+                {/snippet}
+        </DropdownMenu.Trigger>
     <DropdownMenu.Content align="end">
       <DropdownMenu.Label>My Account</DropdownMenu.Label>
       <DropdownMenu.Separator />

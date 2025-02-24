@@ -35,12 +35,14 @@
     />
     <div class="flex items-center p-3 pt-0">
       <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <Button builders={[builder]} variant="ghost" size="icon">
-            <Paperclip class="size-4" />
-            <span class="sr-only">Attach file</span>
-          </Button>
-        </Tooltip.Trigger>
+        <Tooltip.Trigger asChild >
+          {#snippet children({ builder })}
+                    <Button builders={[builder]} variant="ghost" size="icon">
+              <Paperclip class="size-4" />
+              <span class="sr-only">Attach file</span>
+            </Button>
+                            {/snippet}
+                </Tooltip.Trigger>
         <Tooltip.Content side="top">Attach File</Tooltip.Content>
       </Tooltip.Root>
       <Tooltip.Root>
