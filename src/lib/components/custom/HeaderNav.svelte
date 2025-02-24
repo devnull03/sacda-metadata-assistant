@@ -1,15 +1,9 @@
 <script lang="ts">
-  import PanelLeft from "lucide-svelte/icons/panel-left";
-  import Search from "lucide-svelte/icons/search";
-
-  import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
-  import * as Sheet from "$lib/components/ui/sheet/index.js";
   import ThemeSwitcher from "$lib/components/custom/ThemeSwitcher.svelte";
+  import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
+  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+  import { Separator } from "$lib/components/ui/separator/index.js";
   import { page } from "$app/state";
-  import { tabs } from "$lib/utils/nav.store";
 
   let parsedRoute = $derived(
     page.url.pathname
@@ -23,9 +17,36 @@
       }))
       .filter((e, i) => i === 0 || e.name !== "")
   );
-  let flatenedTabs = $derived(Object.values(tabs));
 </script>
 
+<header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+  <Sidebar.Trigger class="-ml-1" />
+  <Separator orientation="vertical" class="mr-2 h-4" />
+  <Breadcrumb.Root>
+    <Breadcrumb.List>
+      {#each parsedRoute as crumb, idx}
+        <Breadcrumb.Item class="hidden md:block">
+          {#if idx === parsedRoute.length - 1}
+            <Breadcrumb.Page>{crumb.name || "Home"}</Breadcrumb.Page>
+          {:else}
+            <Breadcrumb.Link href={crumb.href || "/"}>
+              {crumb.name || "Home"}
+            </Breadcrumb.Link>
+          {/if}
+        </Breadcrumb.Item>
+        {#if idx !== parsedRoute.length - 1}
+          <Breadcrumb.Separator class="hidden md:block" />
+        {/if}
+      {/each}
+    </Breadcrumb.List>
+  </Breadcrumb.Root>
+
+  <div class="flex-1"></div>
+
+  <ThemeSwitcher />
+</header>
+
+<!-- 
 <header
   class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
 >
@@ -105,13 +126,13 @@
           size="icon"
           class="overflow-hidden rounded-full"
         >
-          <!-- <img
+          <img
             src="/images/placeholder-user.jpg"
             width={36}
             height={36}
             alt="Avatar"
             class="overflow-hidden rounded-full"
-          /> -->
+          />
         </Button>
                 {/snippet}
         </DropdownMenu.Trigger>
@@ -124,4 +145,5 @@
       <DropdownMenu.Item>Logout</DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>
-</header>
+</header> 
+-->

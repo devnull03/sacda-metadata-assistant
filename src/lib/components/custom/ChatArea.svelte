@@ -3,9 +3,13 @@
   import { Button } from "$lib/components/ui/button";
   import { Label } from "$lib/components/ui/label";
   import { Textarea } from "$lib/components/ui/textarea";
-  import { CornerDownLeft, Mic, PanelRightClose, Paperclip } from "lucide-svelte";
+  import {
+    CornerDownLeft,
+    Mic,
+    PanelRightClose,
+    Paperclip,
+  } from "lucide-svelte";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-
 
   interface Props {
     collapsed?: boolean;
@@ -13,13 +17,16 @@
   }
 
   let { collapsed = $bindable(), class: className }: Props = $props();
-
 </script>
 
 <div
   class="bg-muted/50 relative flex h-[85vh] min-h-[50vh] flex-col rounded-xl p-4 {className}"
 >
-  <Badge variant="outline" onclick={() => collapsed = !collapsed} class="hover:bg-accent p-1 absolute left-3 top-3 cursor-pointer" >
+  <Badge
+    variant="outline"
+    onclick={() => (collapsed = !collapsed)}
+    class="hover:bg-accent p-1 absolute left-3 top-3 cursor-pointer"
+  >
     <PanelRightClose class="size-4" />
   </Badge>
   <Badge variant="outline" class="absolute right-3 top-3">Output</Badge>
@@ -35,22 +42,24 @@
     />
     <div class="flex items-center p-3 pt-0">
       <Tooltip.Root>
-        <Tooltip.Trigger asChild >
-          {#snippet children({ builder })}
-                    <Button builders={[builder]} variant="ghost" size="icon">
+        <Tooltip.Trigger>
+          {#snippet child({ props })}
+            <Button {...props} variant="ghost" size="icon">
               <Paperclip class="size-4" />
               <span class="sr-only">Attach file</span>
             </Button>
-                            {/snippet}
-                </Tooltip.Trigger>
+          {/snippet}
+        </Tooltip.Trigger>
         <Tooltip.Content side="top">Attach File</Tooltip.Content>
       </Tooltip.Root>
       <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <Button variant="ghost" size="icon">
-            <Mic class="size-4" />
-            <span class="sr-only">Use Microphone</span>
-          </Button>
+        <Tooltip.Trigger>
+          {#snippet child({ props })}
+            <Button {...props} variant="ghost" size="icon">
+              <Mic class="size-4" />
+              <span class="sr-only">Use Microphone</span>
+            </Button>
+          {/snippet}
         </Tooltip.Trigger>
         <Tooltip.Content side="top">Use Microphone</Tooltip.Content>
       </Tooltip.Root>
