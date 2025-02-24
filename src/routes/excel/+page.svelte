@@ -9,7 +9,12 @@
 >
   <div
     class="relative hidden flex-col items-start gap-8 md:flex lg:col-span-4"
-  ></div>
+  >
+
+
+
+
+</div>
 
   <ChatArea class="lg:col-span-2" bind:collapsed={chatCollapsed} />
 
